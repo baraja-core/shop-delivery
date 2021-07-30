@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Baraja\Shop\Delivery\Entity;
 
 
+use Baraja\Country\Entity\Country;
 use Baraja\Doctrine\Identifier\IdentifierUnsigned;
 use Baraja\Localization\TranslateObject;
 use Baraja\Localization\Translation;
@@ -42,8 +43,8 @@ class Delivery
 	#[ORM\Column(type: 'string', length: 16, nullable: true)]
 	private ?string $botServiceType = null;
 
-	#[ORM\Column(type: 'string', length: 2)]
-	private string $country;
+	#[ORM\ManyToOne(targetEntity: Country::class)]
+	private Country $country;
 
 
 	public function __construct(string $name, string $code, int $price)
@@ -96,8 +97,20 @@ class Delivery
 	}
 
 
-	public function getCountry(): string
+	public function getCountry(): Country
 	{
 		return $this->country;
+	}
+
+
+	public function setCountry(Country $country): void
+	{
+		$this->country = $country;
+	}
+
+
+	public function getCountryCode(): string
+	{
+		return $this->country->getCode();
 	}
 }
