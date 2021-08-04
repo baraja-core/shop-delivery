@@ -14,5 +14,8 @@ final class ShopDeliveryExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		OrmAnnotationsExtension::addAnnotationPathToManager($builder, 'Baraja\Shop\Delivery\Entity', __DIR__ . '/Entity');
+
+		$builder->addDefinition($this->prefix('branchManager'))
+			->setFactory(BranchManager::class);
 	}
 }
