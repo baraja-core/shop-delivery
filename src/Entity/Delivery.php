@@ -29,7 +29,7 @@ class Delivery
 	private string $code;
 
 	#[ORM\Column(type: 'text', nullable: true)]
-	private ?string $description;
+	private ?string $description = null;
 
 	#[ORM\Column(type: 'integer')]
 	private int $price;
@@ -42,6 +42,12 @@ class Delivery
 
 	#[ORM\Column(type: 'string', length: 16, nullable: true)]
 	private ?string $botServiceType = null;
+
+	#[ORM\Column(type: 'text', nullable: true)]
+	private ?string $authorizatorKey = null;
+
+	#[ORM\Column(type: 'string', length: 32, nullable: true)]
+	private ?string $carrier = null;
 
 	#[ORM\ManyToOne(targetEntity: Country::class)]
 	private Country $country;
@@ -112,5 +118,29 @@ class Delivery
 	public function getCountryCode(): string
 	{
 		return $this->country->getCode();
+	}
+
+
+	public function getCarrier(): ?string
+	{
+		return $this->carrier;
+	}
+
+
+	public function setCarrier(?string $carrier): void
+	{
+		$this->carrier = $carrier;
+	}
+
+
+	public function getAuthorizatorKey(): ?string
+	{
+		return $this->authorizatorKey;
+	}
+
+
+	public function setAuthorizatorKey(?string $authorizatorKey): void
+	{
+		$this->authorizatorKey = $authorizatorKey;
 	}
 }
