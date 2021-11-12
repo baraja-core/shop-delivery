@@ -6,21 +6,24 @@ namespace Baraja\Shop\Delivery\Entity;
 
 
 use Baraja\Country\Entity\Country;
-use Baraja\Doctrine\Identifier\IdentifierUnsigned;
 use Baraja\Localization\TranslateObject;
 use Baraja\Localization\Translation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @method void setName(string $name, ?string $locale = null)
- * @method string getName(?string $locale = null)
+ * @method Translation getName(?string $locale = null)
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'shop__delivery')]
 class Delivery
 {
-	use IdentifierUnsigned;
 	use TranslateObject;
+
+	#[ORM\Id]
+	#[ORM\Column(type: 'integer', unique: true, options: ['unsigned' => true])]
+	#[ORM\GeneratedValue]
+	protected int $id;
 
 	#[ORM\Column(type: 'translate')]
 	private Translation $name;
@@ -58,6 +61,12 @@ class Delivery
 		$this->setName($name);
 		$this->code = $code;
 		$this->price = $price;
+	}
+
+
+	public function getId(): int
+	{
+		return $this->id;
 	}
 
 
