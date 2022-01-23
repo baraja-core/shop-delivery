@@ -6,8 +6,10 @@ namespace Baraja\Shop\Delivery\Entity;
 
 
 use Baraja\Country\Entity\Country;
+use Baraja\EcommerceStandard\DTO\DeliveryInterface;
 use Baraja\Localization\TranslateObject;
 use Baraja\Localization\Translation;
+use Baraja\Shop\Price\Price;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'shop__delivery')]
-class Delivery
+class Delivery implements DeliveryInterface
 {
 	use TranslateObject;
 
@@ -34,8 +36,9 @@ class Delivery
 	#[ORM\Column(type: 'text', nullable: true)]
 	private ?string $description = null;
 
-	#[ORM\Column(type: 'integer')]
-	private int $price;
+	/** @var numeric-string */
+	#[ORM\Column(type: 'decimal', precision: 15, scale: 4, options: ['unsigned' => true])]
+	private string $price;
 
 	#[ORM\Column(type: 'string', length: 7)]
 	private ?string $color = null;
@@ -56,11 +59,14 @@ class Delivery
 	private Country $country;
 
 
-	public function __construct(string $name, string $code, int $price)
+	/**
+	 * @param numeric-string $price
+	 */
+	public function __construct(string $name, string $code, string $price)
 	{
 		$this->setName($name);
 		$this->code = $code;
-		$this->price = $price;
+		$this->price = Price::normalize($price);
 	}
 
 
@@ -82,9 +88,9 @@ class Delivery
 	}
 
 
-	public function getPrice(): int
+	public function getPrice(): string
 	{
-		return $this->price;
+		return Price::normalize($this->price);
 	}
 
 
