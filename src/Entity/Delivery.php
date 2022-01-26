@@ -9,6 +9,7 @@ use Baraja\Country\Entity\Country;
 use Baraja\EcommerceStandard\DTO\DeliveryInterface;
 use Baraja\Localization\TranslateObject;
 use Baraja\Localization\Translation;
+use Baraja\Shop\Delivery\Repository\DeliveryRepository;
 use Baraja\Shop\Price\Price;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @method void setName(string $name, ?string $locale = null)
  * @method Translation getName(?string $locale = null)
  */
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: DeliveryRepository::class)]
 #[ORM\Table(name: 'shop__delivery')]
 class Delivery implements DeliveryInterface
 {
@@ -73,6 +74,12 @@ class Delivery implements DeliveryInterface
 	public function getId(): int
 	{
 		return $this->id;
+	}
+
+
+	public function getLabel(): string
+	{
+		return (string) $this->getName();
 	}
 
 
