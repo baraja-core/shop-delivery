@@ -6,6 +6,8 @@ namespace Baraja\Shop\Delivery;
 
 
 use Baraja\Doctrine\ORM\DI\OrmAnnotationsExtension;
+use Baraja\Shop\Delivery\Bridge\PacketaCarrierBridge;
+use Baraja\Zasilkovna\Branch;
 use Nette\DI\CompilerExtension;
 
 final class ShopDeliveryExtension extends CompilerExtension
@@ -17,5 +19,11 @@ final class ShopDeliveryExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('branchManager'))
 			->setFactory(BranchManager::class);
+
+		if (class_exists(Branch::class)) {
+			$builder->addDefinition($this->prefix('packetaCarrierBridge'))
+				->setFactory(PacketaCarrierBridge::class)
+				->setAutowired(PacketaCarrierBridge::class);
+		}
 	}
 }
