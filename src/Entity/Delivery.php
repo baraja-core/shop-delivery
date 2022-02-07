@@ -50,9 +50,6 @@ class Delivery implements DeliveryInterface
 	#[ORM\Column(type: 'string', length: 16, nullable: true)]
 	private ?string $botServiceType = null;
 
-	#[ORM\Column(type: 'text', nullable: true)]
-	private ?string $authorizatorKey = null;
-
 	#[ORM\Column(type: 'string', length: 32, nullable: true)]
 	private ?string $carrier = null;
 
@@ -152,17 +149,5 @@ class Delivery implements DeliveryInterface
 	public function setCarrier(?string $carrier): void
 	{
 		$this->carrier = $carrier;
-	}
-
-
-	public function getAuthorizatorKey(): ?string
-	{
-		return $this->authorizatorKey;
-	}
-
-
-	public function setAuthorizatorKey(?string $authorizatorKey): void
-	{
-		$this->authorizatorKey = $authorizatorKey;
 	}
 }
