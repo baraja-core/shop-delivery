@@ -41,6 +41,10 @@ class Delivery implements DeliveryInterface
 	#[ORM\Column(type: 'decimal', precision: 15, scale: 4, options: ['unsigned' => true])]
 	private string $price;
 
+	/** @var numeric-string|null */
+	#[ORM\Column(type: 'decimal', precision: 15, scale: 4, nullable: true, options: ['unsigned' => true])]
+	private ?string $priceCod = null;
+
 	#[ORM\Column(type: 'string', length: 7)]
 	private ?string $color = null;
 
@@ -95,6 +99,24 @@ class Delivery implements DeliveryInterface
 	public function getPrice(): string
 	{
 		return Price::normalize($this->price);
+	}
+
+
+	/**
+	 * @return numeric-string|null
+	 */
+	public function getPriceCod(): ?string
+	{
+		return $this->priceCod !== null ? Price::normalize($this->priceCod) : null;
+	}
+
+
+	/**
+	 * @param numeric-string|null $priceCod
+	 */
+	public function setPriceCod(?string $priceCod): void
+	{
+		$this->priceCod = $priceCod !== null ? Price::normalize($priceCod) : null;
 	}
 
 
