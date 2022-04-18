@@ -19,9 +19,9 @@ final class Distance
 		static $greatCircleRadius = 6_372.795;
 
 		return acos(
-				cos(deg2rad($fromLatitude)) * cos(deg2rad($fromLongitude)) * cos(deg2rad($latitude)) * cos(deg2rad($longitude))
+			cos(deg2rad($fromLatitude)) * cos(deg2rad($fromLongitude)) * cos(deg2rad($latitude)) * cos(deg2rad($longitude))
 				+ cos(deg2rad($fromLatitude)) * sin(deg2rad($fromLongitude)) * cos(deg2rad($latitude)) * sin(deg2rad($longitude))
 				+ sin(deg2rad($fromLatitude)) * sin(deg2rad($latitude)),
-			) * $greatCircleRadius;
+		) * $greatCircleRadius;
 	}
 }
